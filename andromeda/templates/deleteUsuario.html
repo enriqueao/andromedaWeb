@@ -1,0 +1,7 @@
+<form  method="post">
+  {% csrf_token %}
+  <h3>Desea eleminar el registro? {{user.nombre}}</h3>
+
+  <button type="submit">Guardar</button>
+  <a href="{{url 'andromeda:index'}}"></a>
+</form>

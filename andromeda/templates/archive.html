@@ -1,0 +1,18 @@
+<!-- {% for user in users %}
+  <h2>{{user.nombre}}</h2>
+  <p>{{user.nikname}}</p>
+{% endfor %} -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Usuario</title>
+
+  </head>
+  <body>
+    {% for users in user %}
+      <h2>{{users.nombre}}</h2>
+    {% endfor %}
+  </body>
+</html>
