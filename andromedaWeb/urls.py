@@ -22,9 +22,10 @@ from andromeda.views import *
 
 urlpatterns = [
     # url(r'^',login,{'template_name':'andromeda/templates/login.html'},name='login'),
+    url(r'^', login_view),
     url(r'^logout/',logout_then_login,name='logout'),
-    # url(r'^accounts/login/',login,{'template_name':'registroUsuario.html'},name='login'),
-    # url(r'^$',login,{'template_name':'login.hml'},name='login'),
+    url(r'^accounts/login/',login,{'template_name':'index.html'}),
+    # url(r'^',login,{'template_name':'login.hml'},name='login'),
     # url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
     url(r'^andromeda/',include('andromeda.urls',namespace='andromeda')),
     url(r'^server/admin/', admin.site.urls),

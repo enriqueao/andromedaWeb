@@ -128,7 +128,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
 LOGIN_REDIRECT_URL = reverse_lazy('andromeda:registroUsuario')
-LOGOUT_REDIRECT_URL = reverse_lazy('andromeda:login')
-#
-# MEDIA_ROOT = '/media/'
-# MEDIA_URL = '/media/'
+LOGOUT_REDIRECT_URL = reverse_lazy('andromeda:indexB')
+
+MEDIA_ROOT = '/media/'
+MEDIA_URL = '/media/'
