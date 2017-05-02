@@ -22,7 +22,8 @@ from andromeda.views import *
 
 urlpatterns = [
     # url(r'^',login,{'template_name':'andromeda/templates/login.html'},name='login'),
-    url(r'^', login_view),
+    # url(r'^$', login_view),
+    url(r'^', include('andromeda.urls',namespace='andromedaP')),
     url(r'^logout/',logout_then_login,name='logout'),
     url(r'^accounts/login/',login,{'template_name':'index.html'}),
     # url(r'^',login,{'template_name':'login.hml'},name='login'),

@@ -12,17 +12,14 @@ class UsuarioForm(forms.ModelForm):
         fields = [
             'nombre',
             'password',
-            'nikname',
         ]
         labels = {
             'nombre':'Nombre',
             'password': 'Contaseña',
-            'nikname':'nickname',
         }
         widgets = {
             'nombre':forms.TextInput(attrs={'class':'input'}),
             'password':forms.PasswordInput(attrs={'class':'input'}),
-            'nikname':forms.TextInput(attrs={'class':'input'}),
         }
 
 class LoginForm(forms.Form):

@@ -6,11 +6,16 @@ class usuario(models.Model):
     idUsuario = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
-    nikname = models.CharField(max_length=20)
-    # imagen = models.ImageField(upload_to='photos')
 
     def __str__(self):
-        return '{} {} {}'.format(self.nombre,self.password,self.nikname)
+        return '{} {} {}'.format(self.nombre,self.password)
+class andromedadevices(models.Model):
+    pass
 
-class usuarioAdmin(admin.ModelAdmin):
-    list_display = 'nombre','nikname'
+class recordatorios(models.Model):
+    idRecordatorio = models.AutoField(primary_key=True)
+
+class tiporecordatorio(models.Model):
+    pass
+# class usuarioAdmin(admin.ModelAdmin):
+#     list_display = 'nombre','nikname'

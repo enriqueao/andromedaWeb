@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css?family=Muli:300,400,600,700,800,900');
+
+*{
+  padding: 0;
+  margin: 0;
+}
+
+html,body{
+  height: 100%;
+  /*overflow-y: hidden;*/
+  font-family: 'Muli';
+}
+
+.fondo{
+  background-image: url('../images/fondo.png');
+  background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+.index-general{
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: relative;
+  float: right;
+  width: 100%;
+  height: 100%;
+  /*top: 10%;*/
+  overflow: hidden;
+}
+
+.general{
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 170%;
+  height: 100%;
+  margin-left: -70%;
+  /*animation: slide 20s infinite alternate;*/
+  /*animation-timing-function:ease-in;*/
+  transition: all .5s;
+}
+  .menu{
+    position: relative;
+    float: left;
+    width: 70%;
+    height: 100%;
+    background-color: #48494b;
+  }
+
+    .menu-info{
+      width: 100%;
+      height: 30%;
+      background-color: green;
+      position: relative;
+      /*float: right;*/
+    }
+
+      .menu-info img{
+        width: 100%;
+        height: 100%;
+      }
+
+      .menu ol{
+        counter-reset: li;
+        list-style: none;
+        *list-style: decimal;
+        font-size: 15px;
+        font-family: 'Muli', sans-serif;
+        padding: 0;
+        margin-bottom: 4em;
+      }
+
+      .menu a{
+        position: relative;
+        display: block;
+        padding: .4em .4em .4em 2em;
+        *padding: .4em;
+        margin: .5em 0;
+        background: #1990e0;
+        color: #e3e3e3;
+        text-decoration: none;
+        box-shadow:inset 0.5em 0 black;
+        -webkit-transition: box-shadow 1s; /* For Safari 3.1 to 6.0 */
+        transition: box-shadow 1s;
+      }
+
+  .contenido{
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 100%;
+    background-color: yellow;
+  }
+
+    .top-bar{
+      height: 10%;
+      width: 100%;
+      background: #48494b;
+    }
+
+      .top-bar  img{
+        margin: 15px;
+        width: 30px;
+        height: 30px;
+      }
+
+
+    .cerrarSesion{
+      position: relative;
+      float: left;
+      bottom: 0;
+      width: 100%;
+      height: 10%;
+      background: white;
+    }
+
+    .cerrarSesion > p{
+      color: white;
+      font-size: 1em;
+    }
+
+
+
+/******INDEX STYLES********************************/
+.index{
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: relative;
+  float: right;
+  width: 100%;
+  /*height: 100%;*/
+  /*top: 10%;*/
+  overflow: hidden;
+/*background-color: green;*/
+}
+  .slider{
+    position: relative;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		width: 300%;
+		margin-left: -100%;
+		/*animation: slide 20s infinite alternate;*/
+		/*animation-timing-function:ease-in;*/
+		transition: all .5s;
+  }
+    .index-registro{
+      position: relative;
+      float: left;
+      width: 100%;
+      /*height: 100%;*/
+      /*background-color:red;*/
+      background-image: url('../images/fondoR.jpg');
+      /*background-attachment: fixed;*/
+    	background-repeat: no-repeat;
+    	background-size: cover;
+    	background-position: center center;
+      /*opacity: .9;*/
+    }
+
+    .index-bienvenida{
+      position: relative;
+      float: left;
+      width: 100%;
+      height: 100%;
+      overflow-y: hidden;
+      /*background-color:green;*/
+    }
+
+      .index-bienvenida p {
+        font-size: 2em;
+        color: #fdfdfd;
+        text-align: center;
+        margin-top: 5px;
+        font-weight: lighter;
+      }
+
+      .titulos{
+        margin-top: 25%;
+      }
+
+      .index-fecha{
+        width: 100%;
+        height: 10%;
+        /*background-color: red;*/
+      }
+
+    .index-login{
+      position: relative;
+      float: left;
+      width: 100%;
+      /*height: 100%;*/
+      /*background-color:yellow;*/
+      background-image: url('../images/fondoL.jpg');
+      background-attachment: fixed;
+    	background-repeat: no-repeat;
+    	background-size: cover;
+    	background-position: center center;
+    }
+
+  .index-top-bar{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    z-index: 1;
+  }
+    .top-bar-titulo{
+      position: relative;
+      float: left;
+      width: 80%;
+      height: 100%;
+      /*background-color: pink;*/
+    }
+
+    .nav{
+      width: 10%;
+      position: relative;
+      float: left;
+      height: 100%;
+      /*background-color: red;*/
+    }
+
+  .index-top-bar  p{
+    margin-top: 9px;
+    text-align: center;
+    color: #fdfdfd;
+    font-size: 2em;
+  }
+
+  .index-top-bar img{
+    width: 30px;
+    height: 30px;
+    margin-top: 15px;
+  }
+
+  input[type="submit"]{
+    border: none;
+    border-radius: 100px;
+  }
+
+  #iniciaSesion{
+    color: #fdfdfd;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  #comenzar{
+    margin-top: 15px;
+    background-color: #1990e0;
+    color: #fdfdfd;
+    width: 50%;
+    height: 10%;
+    margin: 0 25%;
+    font-size: 1.5em;
+  }
+
+  .formulario{
+    margin-top: 10%;
+    width: 100%;
+    height: 100%;
+    min-height: 30%;
+  }
+
+  .formulario-login{
+    margin-top: 30%;
+    width: 100%;
+    height: 100%;
+    min-height: 30%;
+  }
