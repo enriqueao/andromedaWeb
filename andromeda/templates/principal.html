@@ -10,9 +10,14 @@
   <link rel="stylesheet" href="{% static 'css/demo.css' %}">
   <link rel="stylesheet" href="{% static 'css/set1.css' %}">
   <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animate.css' %}">
 
   <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
   <script defer src="{% static 'js/DjangoAjax.js' %}"></script>
+  <script defer src="{% static 'js/principal.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
   <title>Usuario</title>
 </head>
@@ -25,16 +30,16 @@
           <div class="imagen-usuario">
             <img src="{% static 'images/perfil.jpg' %}" alt="">
             <p>Enrique Aguilar Orozco</p>
-            <p>2 Recordatorios Pendientes</p>
+            <p>4 Recordatorios Pendientes</p>
           </div>
         </div>
         <ul>
           <li><a href="#" onclick="vistas('perfil')">Ver Perfil</a></li>
           <li><a href="#" onclick="vistas('recordatorio')">Ver Recordatorios</a></li>
-          <li><a href="#" onclick="vistas('andromeda')">Mi Andromeda</a></li>
+          <li><a href="#" onclick="vistas('andromeda'),graficar()">Andromeda Home</a></li>
           <li><a href="#" onclick="vistas('ayuda')">Ayuda</a></li>
+          <li><a href="/">Salir</a></li>
         </ul>
-        <a href="/">Salir</a>
       </div>
       <div class="contenido">
         <div class="top-bar">
@@ -45,32 +50,29 @@
     </div>
   </div>
 
-  <script type="text/javascript">
-    function abrirMenu() {
-        var menu = document.querySelector('#menu');
-        var img = document.querySelector('#img');
-        if(menu.style.marginLeft == '-70%') {
-          menu.style.marginLeft = '0%';
-          img.src = '../static/images/back.svg';
-        } else {
-          img.src = '../static/images/menu.svg';
-          menu.style.marginLeft = '-70%';
-        }
-
-    }
-
-    function vistas(vista) {
-      var contenido = document.getElementById('contenido-element');
-      $.ajax({
-        url: "/andromeda/"+vista+"/",
-        type: "POST",
-        success: function (response) {
-          console.log(response);
-           contenido.innerHTML = response;
-           abrirMenu();
-        }
-      });
-    }
-  </script>
+  <div id="nuevo" class="nuevo-recordatorio-form" style="display:none;">
+    <div class="salir">
+      <div class="down">
+        <a href="#" onclick="down()"><img src="{% static 'images/down-arrow.svg' %}" alt=""></a>
+      </div>
+    </div>
+    <div class="formUsuario-recordatorio">
+      <p>Fecha Del Recordatorio</p>
+      <input type="date" name="" value="">
+      <p>Hora Del Recordatorio</p>
+      <input type="time" name="" value="">
+      <p>Prioridad</p>
+      <div class="select">
+        <select class="" name="" id="prioridad">
+          <option value="">Alta</option>
+          <option value="" selected>Moderada</option>
+          <option value="">Baja</option>
+        </select>
+      </div>
+      <textarea name="name" rows="8"></textarea>
+      <p>Para Continua Solo Guarda el Recordatorio, Andromeda Home te lo recordara</p>
+      <input type="submit" name="" value="Guardar" id="comenzar" onclick="entrar()">
+    </div>
+  </div>
 </body>
 </html>

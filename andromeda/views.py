@@ -26,8 +26,8 @@ def recordatorio(request):
     return render(request, 'recordatorio.html')
 @csrf_exempt
 def andromeda(request):
-    return render(request, 'help.html')
-@csrf_exempt 
+    return render(request, 'andromeda.html')
+@csrf_exempt
 def bienvenida(request):
     return render(request,'index.html')
 

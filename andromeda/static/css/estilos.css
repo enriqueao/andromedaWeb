@@ -107,7 +107,7 @@ html,body{
       height: 10%;
       width: 100%;
       background: #3d414c;
-      z-index: 1;
+      /*z-index: 1;*/
     }
 
       .top-bar  img{
@@ -182,14 +182,24 @@ html,body{
 }
 
 .ayuda > p{
-  text-align: center;
+  text-align: justify;
   color:#40b797;
+  margin: 3px 0;
+}
+
+.creditos{
+  opacity: .8;
+  color:#151515;
 }
 
 .ayuda > h2{
   text-align: center;
 }
 
+.graficar{
+  width: 100%;
+  height: calc(100% - 240px);
+}
 /****RECORDATORIO**/
 .recordatorios{
   position: absolute;
@@ -209,13 +219,13 @@ html,body{
 
   .recordatorio{
     width: calc(100% - 10px);
-    margin: 10px 5px;
+    margin: 10px 5px 0 5px;
     height: 60px;
-    border:1px solid #40b797;
     border-radius: 5px;
   }
 
   .importancia-sin{
+    border:1px solid #40b797;
     background-color:#fff;
   }
 
@@ -229,6 +239,51 @@ html,body{
 
   .importancia-baja{
     background-color:#40b797;
+  }
+
+  .recordatorio-hora{
+    position: relative;
+    float: left;
+    height: 100%;
+    width: 20%;
+  }
+
+  .recordatorio-info{
+    position: relative;
+    float: left;
+    height: 100%;
+    width: 60%;
+  }
+  .recordatorio-info p{
+    color: #151515;
+    margin: 5px;
+  }
+
+  .recordatorio-hora p{
+    line-height: 50px;
+    text-align: center;
+    color:#151515;
+  }
+
+  .recordatorio-action{
+    position: relative;
+    float: left;
+    height: 100%;
+    width: 10%;
+    padding: 10px;
+  }
+
+  .delete{
+    background-color: #d80000;
+  }
+
+  .complete{
+    background-color: green;
+  }
+
+  .recordatorio-action img{
+    width: 100%;
+    height: 100%;
   }
 
 
@@ -385,4 +440,82 @@ html,body{
     width: 100%;
     height: 100%;
     min-height: 30%;
+  }
+
+  .nuevo-recordatorio-form{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .salir{
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 10%;
+    background-color: #fff;
+  }
+    .down{
+      position: relative;
+      float: right;
+      width: 10%;
+      height: 100%;
+    }
+
+    .down img{
+      margin-top: 20px;
+      width: 30px;
+      height: 30px;
+    }
+
+  .formUsuario-recordatorio{
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 90%;
+    background-color: rgba(61,65,76,.9);
+  }
+
+  .formUsuario-recordatorio p {
+    margin: 10px 0;
+    color: #fff;
+    text-align: center;
+  }
+
+  textarea{
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 40%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    resize: none;
+    opacity: .9;
+  }
+
+  input[type="date"],input[type="time"],select{
+    border: none;
+    border: 2px solid #3da88b;
+    text-align: center;
+    outline: none;
+    min-width: 100px;
+    height: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    background: transparent;
+    color: #fff;
+  }
+
+  select{
+    background-color: rgba(61,65,76,.9);
+  }
+
+  .select{
+    display: block;
+    margin: 10px 37%;
   }
