@@ -51,7 +51,7 @@ html,body{
     float: left;
     width: 70%;
     height: 100%;
-    background-color: #48494b;
+    background-color: #151515;
   }
 
     .menu-info{
@@ -80,15 +80,17 @@ html,body{
       .menu a{
         position: relative;
         display: block;
-        padding: .4em .4em .4em 2em;
-        *padding: .4em;
+        padding: 1em .5em 1em 1em;
         margin: .5em 0;
-        background: #1990e0;
-        color: #e3e3e3;
+        font-size: 1.3em;
+        border-bottom: 1px solid rgba(255,255,255,.2);
+        border-top: 1px solid rgba(0,0,0,.2);
+        /* background: #1990e0; */
+        color: rgba(255,255,255,.7);
         text-decoration: none;
-        box-shadow:inset 0.5em 0 black;
-        -webkit-transition: box-shadow 1s; /* For Safari 3.1 to 6.0 */
-        transition: box-shadow 1s;
+        /* box-shadow: inset 0.5em 0 black; */
+        /* -webkit-transition: box-shadow 1s; */
+        /* transition: box-shadow 1s; */
       }
 
   .contenido{
@@ -96,13 +98,16 @@ html,body{
     float: left;
     width: 100%;
     height: 100%;
-    background-color: yellow;
+    background-color: #ffffff;
   }
 
     .top-bar{
+      position: relative;
+      float: left;
       height: 10%;
       width: 100%;
-      background: #48494b;
+      background: #3d414c;
+      z-index: 1;
     }
 
       .top-bar  img{
@@ -126,6 +131,105 @@ html,body{
       font-size: 1em;
     }
 
+    .contenido-element{
+      position: relative;
+      float: left;
+      background-color: #fff;
+      width: 100%;
+      height: 90%;
+    }
+
+    .imagen-usuario{
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height:70%;
+    }
+
+    .imagen-usuario > img{
+      margin: 10px 35%;
+      border-radius: 100%;
+      width: 30%;
+      height: auto;
+      border: 4px solid #40b797;
+    }
+
+    .imagen-usuario > p{
+      color: #40b797;
+      font-size: 1.2em;
+      text-align: center;
+    }
+/***PERFIL****/
+    .imagen-perfil > img{
+      margin: 10px 35%;
+      border-radius: 100%;
+      width: 30%;
+      height: auto;
+      border: 4px solid #40b797;
+    }
+
+    .imagen-perfil > label {
+      text-align: center;
+      color:  #40b797;
+      display:block;
+      /*height:100px;*/
+    }
+/****AYUDA****/
+
+.ayuda{
+  padding: 10px;
+}
+
+.ayuda > p{
+  text-align: center;
+  color:#40b797;
+}
+
+.ayuda > h2{
+  text-align: center;
+}
+
+/****RECORDATORIO**/
+.recordatorios{
+  position: absolute;
+  right: 0;
+  width: 100%;
+}
+  .recordatorios > h2{
+    text-align: center;
+  }
+  .nuevo-recordatorio{
+    width: calc(100% - 10px);
+    margin: 10px 5px;
+    height: 60px;
+    background-color:#40b797;
+    border-radius: 5px;
+  }
+
+  .recordatorio{
+    width: calc(100% - 10px);
+    margin: 10px 5px;
+    height: 60px;
+    border:1px solid #40b797;
+    border-radius: 5px;
+  }
+
+  .importancia-sin{
+    background-color:#fff;
+  }
+
+  .importancia-alta{
+    background-color:#dd2c5b;
+  }
+
+  .importancia-moderada{
+    background-color:#ddad2c;
+  }
+
+  .importancia-baja{
+    background-color:#40b797;
+  }
 
 
 /******INDEX STYLES********************************/
@@ -184,7 +288,8 @@ html,body{
       }
 
       .titulos{
-        margin-top: 25%;
+        /*margin-top: 25%;*/
+        margin-top: 100px;
       }
 
       .index-fecha{
@@ -246,6 +351,7 @@ html,body{
 
   input[type="submit"]{
     border: none;
+    outline: none;
     border-radius: 100px;
   }
 
@@ -254,6 +360,7 @@ html,body{
     text-decoration: none;
     text-align: center;
     margin-top: 20px;
+    font-size: 1.5em;
   }
 
   #comenzar{
@@ -274,7 +381,7 @@ html,body{
   }
 
   .formulario-login{
-    margin-top: 30%;
+    margin-top: 100px;
     width: 100%;
     height: 100%;
     min-height: 30%;

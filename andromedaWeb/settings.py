@@ -127,8 +127,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
-LOGIN_REDIRECT_URL = reverse_lazy('andromeda:registroUsuario')
-LOGOUT_REDIRECT_URL = reverse_lazy('andromeda:indexB')
+LOGIN_REDIRECT_URL = reverse_lazy('andromeda:index')
+LOGOUT_REDIRECT_URL = reverse_lazy('andromeda:principal')
 
 MEDIA_ROOT = '/media/'
 MEDIA_URL = '/media/'
