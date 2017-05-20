@@ -29,7 +29,7 @@
           <img src="{% static 'images/clima.jpg' %}" alt="">
           <div class="imagen-usuario">
             <img src="{% static 'images/perfil.jpg' %}" alt="">
-            <p>Enrique Aguilar Orozco</p>
+            <p>{{user}}</p>
             <p>4 Recordatorios Pendientes</p>
           </div>
         </div>
@@ -38,7 +38,7 @@
           <li><a href="#" onclick="vistas('recordatorio')">Ver Recordatorios</a></li>
           <li><a href="#" onclick="vistas('andromeda'),graficar()">Andromeda Home</a></li>
           <li><a href="#" onclick="vistas('ayuda')">Ayuda</a></li>
-          <li><a href="/">Salir</a></li>
+          <li><a href="/logout/">Salir</a></li>
         </ul>
       </div>
       <div class="contenido">

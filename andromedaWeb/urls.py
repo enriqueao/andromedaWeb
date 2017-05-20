@@ -17,17 +17,15 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from django.contrib.auth.views import login,logout_then_login
 from django.conf import settings
+from django.contrib.sites.models import *
 
 from andromeda.views import *
 
 urlpatterns = [
-    # url(r'^',login,{'template_name':'andromeda/templates/login.html'},name='login'),
-    # url(r'^$', login_view),
     url(r'^', include('andromeda.urls',namespace='andromedaP')),
     url(r'^logout/',logout_then_login,name='logout'),
-    url(r'^accounts/login/',login,{'template_name':'index.html'}),
-    # url(r'^',login,{'template_name':'login.hml'},name='login'),
-    # url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
+    # url(r'^accounts/$',bienvenida),
+    url(r'^accounts/login/$',bienvenida),
     url(r'^andromeda/',include('andromeda.urls',namespace='andromeda')),
     url(r'^server/admin/', admin.site.urls),
 ]

@@ -8,13 +8,16 @@ from django.views.generic import *
 from django.core.urlresolvers import *
 from django.template import Context, loader
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 from andromeda.models import *
 from andromeda.forms import *
 # Create your views here.
 
+@login_required
 def usuario(request):
     return render(request,'principal.html')
+
 @csrf_exempt
 def ayuda(request):
     return render(request, 'help.html')
@@ -27,9 +30,43 @@ def recordatorio(request):
 @csrf_exempt
 def andromeda(request):
     return render(request, 'andromeda.html')
+
 @csrf_exempt
 def bienvenida(request):
-    return render(request,'index.html')
+    if request.user.is_authenticated():
+        return render(request,'principal.html')
+    else:
+        return render(request,'index.html')
+
+def registro(request):
+    if request.method == 'POST':
+        idAndromeda = request.POST.get('idAndromeda',False)
+        username = request.POST.get('username',False)
+        if(andromedadevices.objects.filter(idAndromeda=idAndromeda).exists()):
+            if(User.objects.filter(username=username).exists()):
+                first_name = request.POST.get('nombreCompleto',False)
+                email = request.POST.get('correo',False)
+                password = request.POST.get('password',False)
+                exito = User.objects.create_user(username=username, password=password,email=email,first_name=first_name)
+                return HttpResponse('1')
+            else:
+                return HttpResponse('2')
+        else:
+            return HttpResponse('0');
+
+
+def login_user(request):
+    username = request.POST.get('username', None)
+    password = request.POST.get('password',None)
+    acceso = authenticate(username=username,password=password)
+    if acceso is not None:
+        usuario = User.objects.filter(username=username)
+        request.session['username'] = username
+        login(request,acceso)
+        respuesta = '1'
+    else:
+        respuesta = '0'
+    return HttpResponse(respuesta);
 
 # def login_view(request):
 #     username = request.POST.get('username',False)

@@ -1,23 +1,37 @@
 from django.db import models
 from django.contrib import admin
-# Create your models here.
-
-class usuario(models.Model):
-    idUsuario = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
-
-    def __str__(self):
-        return '{} {} {}'.format(self.nombre,self.password)
+from django.contrib.auth.models import User
+from datetime import datetime
 
 class andromedadevices(models.Model):
-    pass
+    idAndromeda = models.AutoField(primary_key=True)
+    ubicacion = models.CharField(max_length=50)
+    creado = models.DateTimeField(auto_now_add=True, editable=False, null=False, blank=False)
 
-class recordatorios(models.Model):
-    idRecordatorio = models.AutoField(primary_key=True)
+class andromedaUsers(models.Model):
+    idAndromedaUser = models.OneToOneField(User, primary_key=True)
+    idAndromeda = models.ForeignKey(andromedadevices,null=False,blank=False,on_delete=models.CASCADE)
+    date_joined = models.DateField()
+    estatus = models.IntegerField()
+    imagen = models.CharField(max_length=50);
 
 class tiporecordatorio(models.Model):
     idTipoRecordatorio = models.AutoField(primary_key=True)
     prioridad = models.CharField(max_length=20)
+
+class EstadosRecordatorios(models.Model):
+    idEstadoRecordatorio = models.AutoField(primary_key=True)
+    estado = models.CharField(max_length=20)
+
+class recordatorios(models.Model):
+    idRecordatorio = models.AutoField(primary_key=True)
+    idAndromedaUser = models.ForeignKey(andromedaUsers,null=True,blank=True,on_delete=models.CASCADE)
+    idTipoRecordatorio = models.ForeignKey(tiporecordatorio,null=True,blank=True,on_delete=models.CASCADE)
+    fechaCreado = models.DateTimeField(auto_now_add=True, editable=False, null=False, blank=False)
+    diaRecordatorio = models.DateTimeField(blank=True,default=datetime.now)
+    descripcion = models.CharField(max_length=50,null=False,default='Sin Información Disponible')
+    idEstadoRecordatorio = models.ForeignKey(EstadosRecordatorios,null=True,blank=True,on_delete=models.CASCADE)
+
+
 # class usuarioAdmin(admin.ModelAdmin):
 #     list_display = 'nombre','nikname'

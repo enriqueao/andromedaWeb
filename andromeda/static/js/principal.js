@@ -3,9 +3,9 @@ function abrirMenu() {
     var img = document.querySelector('#img');
     if(menu.style.marginLeft == '-70%') {
       menu.style.marginLeft = '0%';
-      img.src = '../static/images/back.svg';
+      img.src = '/static/images/back.svg';
     } else {
-      img.src = '../static/images/menu.svg';
+      img.src = '/static/images/menu.svg';
       menu.style.marginLeft = '-70%';
     }
 

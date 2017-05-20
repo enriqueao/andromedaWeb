@@ -9,6 +9,7 @@
     <script defer src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script defer src="{% static 'js/DjangoAjax.js' %}"></script>
     <script defer src="{% static 'js/slider.js' %}"></script>
+    <script defer src="{% static 'js/config.js' %}"></script>
     <script defer src="{% static 'js/classie.js' %}"></script>
 
     <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
@@ -17,7 +18,7 @@
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" type="text/css" >
   </head>
-  <body class="fondo" style="overflow:hidden;">
+  <body class="fondo">
     <div class="index-top-bar">
       <div class="nav">
         <a href="#" id="siguiente" onclick="atras()"><img src="{% static 'images/back.svg' %}" alt=""></a>
@@ -34,36 +35,42 @@
         <div class="index-registro row center-md center-xs top-xs">
           <div class="formulario ol-xs-12 col-md-4 col-sm-12">
             <span class="input input--kyo">
-              <input class="input__field input__field--kyo" type="password" id="input-19">
-              <label class="input__label input__label--kyo" for="input-19">
+              <input class="input__field input__field--kyo" type="password" id="input-1">
+              <label class="input__label input__label--kyo" for="input-1">
                 <span class="input__label-content input__label-content--kyo">Andromeda ID</span>
               </label>
             </span>
             <span class="input input--kyo">
-              <input class="input__field input__field--kyo" type="password" id="input-19">
-              <label class="input__label input__label--kyo" for="input-19">
+              <input class="input__field input__field--kyo" type="text" id="input-0">
+              <label class="input__label input__label--kyo" for="input-0">
+                <span class="input__label-content input__label-content--kyo">username</span>
+              </label>
+            </span>
+            <span class="input input--kyo">
+              <input class="input__field input__field--kyo" type="text" id="input-2">
+              <label class="input__label input__label--kyo" for="input-2">
                 <span class="input__label-content input__label-content--kyo">Nombre Completo</span>
               </label>
             </span>
             <span class="input input--kyo">
-              <input class="input__field input__field--kyo" type="password" id="input-19">
-              <label class="input__label input__label--kyo" for="input-19">
+              <input class="input__field input__field--kyo" type="email" id="input-3">
+              <label class="input__label input__label--kyo" for="input-3">
                 <span class="input__label-content input__label-content--kyo">Correo</span>
               </label>
             </span>
             <span class="input input--kyo">
-              <input class="input__field input__field--kyo" type="password" id="input-19">
-              <label class="input__label input__label--kyo" for="input-19">
+              <input class="input__field input__field--kyo" type="password" id="input-4">
+              <label class="input__label input__label--kyo" for="input-4">
                 <span class="input__label-content input__label-content--kyo">Introduce tu contraseña</span>
               </label>
             </span>
             <span class="input input--kyo">
-              <input class="input__field input__field--kyo" type="password" id="input-19">
-              <label class="input__label input__label--kyo" for="input-19">
+              <input class="input__field input__field--kyo" type="password" id="input-7">
+              <label class="input__label input__label--kyo" for="input-7">
                 <span class="input__label-content input__label-content--kyo">Confirma tu contraseña</span>
               </label>
             </span>
-            <input type="submit" name="" value="Continuar" id="comenzar" onclick="">
+            <input type="submit" name="" value="Continuar" id="comenzar" onclick="registro()">
           </div>
         </div>
         <div class="index-bienvenida row center-md center-xs middle-xs center-lg center-md">
@@ -79,14 +86,14 @@
         <div class="index-login row center-md center-xs middle-xs">
           <div class="formulario-login col-xs-12 col-md-5 col-sm-12">
             <span class="input input--kyo">
-              <input class="input__field input__field--kyo" type="text" id="input-19">
-              <label class="input__label input__label--kyo" for="input-19">
-                <span class="input__label-content input__label-content--kyo">¿Cual es tu correo?</span>
+              <input class="input__field input__field--kyo" type="email" id="input-5">
+              <label class="input__label input__label--kyo" for="input-5">
+                <span class="input__label-content input__label-content--kyo">¿Cual es tu username?</span>
               </label>
             </span>
             <span class="input input--kyo">
-              <input class="input__field input__field--kyo" type="password" id="input-19">
-              <label class="input__label input__label--kyo" for="input-19">
+              <input class="input__field input__field--kyo" type="password" id="input-6">
+              <label class="input__label input__label--kyo" for="input-6">
                 <span class="input__label-content input__label-content--kyo">Introduce tu contraseña</span>
               </label>
             </span>
@@ -99,23 +106,57 @@
   <script type="text/javascript">
 
   function entrar(){
-    location.href = '/Usuario/';
+    var username = document.getElementById('input-5').value;
+    var pass = document.getElementById('input-6').value;
+
+    $.ajax({
+      url:'/andromeda/login/',
+      type:'POST',
+      data:{'username':username,'password':pass},
+      success: function(response) {
+        if(parseInt(response)){
+          if(response == '1'){
+            alert('Bienvenido');
+            location.reload();
+          } else {
+            alert('Constraseña y/o Usuario incorrecto');
+          }
+        }
+      }
+    });
   }
 
-  document.querySelector('#input-19').addEventListener('focus',function(){
-    document.body.style.overflow = '';
-  },false);
+  function registro() {
+    var idAndromeda = document.getElementById('input-1').value;
+    var username = document.getElementById('input-0').value;
+    var nombreCompleto = document.getElementById('input-2').value;
+    var correo = document.getElementById('input-3').value;
+    var pass = document.getElementById('input-4').value;
+    var confimPass = document.getElementById('input-7').value;
 
-  document.querySelector('#input-19').addEventListener('blur',function(){
-    document.body.style.overflow = 'hidden';
-  },false);
+    $.ajax({
+      url:'andromeda/registro/',
+      type:'POST',
+      data:{'idAndromeda':idAndromeda,'username':username,'nombreCompleto':nombreCompleto,'correo':correo,'password':pass},
+      success: function(response) {
+        if (response == '1') {
+          alert('Registro Existoso, Ahora inicia Sesión');
+          document.getElementById('slide').style = 'margin-left:-200%';
+        } if(response == '0'){
+          alert('Comprueba el identificador de Andromeda');
+        } else {
+          alert('Intenta con otro nombre de Usuario');
+        }
+      }
+    });
+  }
 
   function enviar() {
     var username = document.getElementById('username');
     var pass = document.getElementById('pass');
 
     $.ajax({
-      url: "/andromeda/ajax2/",
+      url: config.url+"andromeda/ajax2/",
       type: "POST",
       data: {'username': username.value,'pass':pass.value},
       success: function (response) {
