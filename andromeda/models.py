@@ -11,9 +11,9 @@ class andromedadevices(models.Model):
 class andromedaUsers(models.Model):
     idAndromedaUser = models.OneToOneField(User, primary_key=True)
     idAndromeda = models.ForeignKey(andromedadevices,null=False,blank=False,on_delete=models.CASCADE)
-    date_joined = models.DateField()
-    estatus = models.IntegerField()
-    imagen = models.CharField(max_length=50);
+    date_joined = models.DateTimeField(auto_now_add=True, editable=False, null=False, blank=False)
+    estatus = models.IntegerField(default="1")
+    imagen = models.CharField(max_length=50,default="user.svg");
 
 class tiporecordatorio(models.Model):
     idTipoRecordatorio = models.AutoField(primary_key=True)
@@ -25,13 +25,13 @@ class EstadosRecordatorios(models.Model):
 
 class recordatorios(models.Model):
     idRecordatorio = models.AutoField(primary_key=True)
-    idAndromedaUser = models.ForeignKey(andromedaUsers,null=True,blank=True,on_delete=models.CASCADE)
-    idTipoRecordatorio = models.ForeignKey(tiporecordatorio,null=True,blank=True,on_delete=models.CASCADE)
+    idAndromedaUser = models.IntegerField(default="0")
+    idTipoRecordatorio = models.IntegerField(default="0")
     fechaCreado = models.DateTimeField(auto_now_add=True, editable=False, null=False, blank=False)
-    diaRecordatorio = models.DateTimeField(blank=True,default=datetime.now)
+    diaRecordatorio = models.DateTimeField(auto_now_add=True, editable=False, null=False, blank=False)
     descripcion = models.CharField(max_length=50,null=False,default='Sin Información Disponible')
-    idEstadoRecordatorio = models.ForeignKey(EstadosRecordatorios,null=True,blank=True,on_delete=models.CASCADE)
-
+    idEstadoRecordatorio = models.IntegerField(default="1")
+    horaRecordar = models.TimeField(blank=True, null=True)
 
 # class usuarioAdmin(admin.ModelAdmin):
 #     list_display = 'nombre','nikname'

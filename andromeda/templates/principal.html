@@ -14,10 +14,11 @@
 
   <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
   <script defer src="{% static 'js/DjangoAjax.js' %}"></script>
-  <script defer src="{% static 'js/principal.js' %}"></script>
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  <script src="https://code.highcharts.com/highcharts.js"></script>
-  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="{% static 'js/hammer.min.js' %}"></script>
+  <script src="{% static 'js/principal.js' %}"></script>
+  <script defer src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script defer src="https://code.highcharts.com/highcharts.js"></script>
+  <script defer src="https://code.highcharts.com/modules/exporting.js"></script>
 
   <title>Usuario</title>
 </head>
@@ -28,8 +29,8 @@
         <div class="menu-info">
           <img src="{% static 'images/clima.jpg' %}" alt="">
           <div class="imagen-usuario">
-            <img src="{% static 'images/perfil.jpg' %}" alt="">
-            <p>{{user}}</p>
+            <img src="{% static 'images/' %}{{request.session.userAndromeda.imagen}}" alt="">
+            <p>{{user.first_name}}</p>
             <p>4 Recordatorios Pendientes</p>
           </div>
         </div>
@@ -58,21 +59,58 @@
     </div>
     <div class="formUsuario-recordatorio">
       <p>Fecha Del Recordatorio</p>
-      <input type="date" name="" value="">
+      <input type="date" name="diaRecordatorio" value="" id="diaRecordatorio">
       <p>Hora Del Recordatorio</p>
-      <input type="time" name="" value="">
+      <input type="time" name="hora" value="" id="horaRecordar">
       <p>Prioridad</p>
       <div class="select">
         <select class="" name="" id="prioridad">
-          <option value="">Alta</option>
-          <option value="" selected>Moderada</option>
-          <option value="">Baja</option>
+          <option value="1">Alta</option>
+          <option value="2" selected>Moderada</option>
+          <option value="3">Baja</option>
         </select>
       </div>
-      <textarea name="name" rows="8"></textarea>
+      <textarea name="name" rows="8" id="descripcion"></textarea>
       <p>Para Continua Solo Guarda el Recordatorio, Andromeda Home te lo recordara</p>
-      <input type="submit" name="" value="Guardar" id="comenzar" onclick="entrar()">
+      <input type="hidden" name="" value="{{request.session.idAndromeda}}" id="id">
+      <input type="submit" name="" value="Guardar" id="comenzar" onclick="guardarRecordatorio()">
     </div>
   </div>
+  <script type="text/javascript">
+  var myElement = document.body;
+
+  // create a simple instance
+  // by default, it only adds horizontal recognizers
+  var mc = new Hammer(myElement);
+  // listen to events...
+  mc.on("panleft", function(ev) {
+    abrirMenu();
+  });
+
+  mc.on("panright", function(ev) {
+    abrirMenu();
+  });
+
+  function guardarRecordatorio() {
+    prioridad = document.getElementById('prioridad');
+    id = document.getElementById('id');
+    diaRecordatorio = document.getElementById('diaRecordatorio');
+    descripcion = document.getElementById('descripcion');
+    horaRecordar = document.getElementById('horaRecordar');
+    $.ajax({
+      url: "/andromeda/guardarRecordatorio/",
+      type: "POST",
+      data:{'idTipoRecordatorio':prioridad.value,'diaRecordatorio':diaRecordatorio.value,'descripcion':descripcion.value,'horaRecordar':horaRecordar.value,'id':id.value},
+      success: function (response) {
+         if(response == '1'){
+            alert('Andromeda te recordara "recordatorio" en horas')
+            down();
+         } else {
+           alert(response);
+         }
+      }
+    });
+  }
+  </script>
 </body>
 </html>

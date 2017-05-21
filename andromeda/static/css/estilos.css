@@ -82,7 +82,7 @@ html,body{
         display: block;
         padding: 1em .5em 1em 1em;
         margin: .5em 0;
-        font-size: 1.3em;
+        font-size: 1em;
         border-bottom: 1px solid rgba(255,255,255,.2);
         border-top: 1px solid rgba(0,0,0,.2);
         /* background: #1990e0; */
@@ -278,7 +278,7 @@ html,body{
   }
 
   .complete{
-    background-color: green;
+    background-color: #3d8877;
   }
 
   .recordatorio-action img{
@@ -455,7 +455,7 @@ html,body{
     float: left;
     width: 100%;
     height: 10%;
-    background-color: #fff;
+    background-color: #3d8877;
   }
     .down{
       position: relative;
@@ -468,6 +468,7 @@ html,body{
       margin-top: 20px;
       width: 30px;
       height: 30px;
+      filter: invert(100);
     }
 
   .formUsuario-recordatorio{
@@ -485,15 +486,19 @@ html,body{
   }
 
   textarea{
+    position: relative;
+    left: 10%;
     border: none;
     outline: none;
-    width: 100%;
-    height: 40%;
+    width: 80%;
+    margin-left:10%;
+    height: auto;
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 10px;
     resize: none;
     opacity: .9;
+    border-radius: 5px;
   }
 
   input[type="date"],input[type="time"],select{

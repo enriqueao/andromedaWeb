@@ -1,24 +1,24 @@
 {% load staticfiles %}
 <div class="imagen-perfil">
-  <img src="{% static 'images/perfil.jpg' %}" alt="">
+  <img src="{% static 'images/' %}{{request.session.userAndromeda.imagen}}" alt="">
   <label for="subir">Cambiar Foto de perfil</label>
   <input type="file" name="foto" value="" id="subir" style="display:none;">
 </div>
 <div class="info-usuario">
   <span class="input input--isao">
-		<input class="input__field input__field--isao" type="text" id="input-38" placeholder="Enrique Aguilar">
+		<input class="input__field input__field--isao" type="text" id="input-38" placeholder="{{user.first_name}}">
 		<label class="input__label input__label--isao" for="input-38" data-content="Cambia tu nombre">
 			<span class="input__label-content input__label-content--isao">Tu nombre</span>
 		</label>
 	</span>
   <span class="input input--isao">
-		<input class="input__field input__field--isao" type="text" id="input-39" placeholder="enriqueao96@gmail.com">
+		<input class="input__field input__field--isao" type="text" id="input-39" placeholder="{{user.username}}">
 		<label class="input__label input__label--isao" for="input-39" data-content="Cambia tu nombre de Usuario">
 			<span class="input__label-content input__label-content--isao">Tu Nombre de Usuario</span>
 		</label>
 	</span>
   <span class="input input--isao">
-		<input class="input__field input__field--isao" type="text" id="input-40" placeholder="enriqueao">
+		<input class="input__field input__field--isao" type="text" id="input-40" placeholder="{{user.email}}">
 		<label class="input__label input__label--isao" for="input-40" data-content="Cambia tu correo">
 			<span class="input__label-content input__label-content--isao">Tu correo</span>
 		</label>

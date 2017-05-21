@@ -27,9 +27,25 @@ def perfil(request):
 @csrf_exempt
 def recordatorio(request):
     return render(request, 'recordatorio.html')
+
+def guardarRecordatorio(request):
+    idTipoRecordatorio = request.POST.get('idTipoRecordatorio',False)
+    iduser = request.POST.get('id')
+    diaRecordatorio = request.POST.get('diaRecordatorio',False)
+    descripcion = request.POST.get('descripcion',False)
+    horaRecordar = request.POST.get('horaRecordar',False)
+    # usuario =  User.objects.values('id').filter(username=username)
+    if request.method == 'POST':
+        r = recordatorios(idAndromedaUser=iduser,idTipoRecordatorio=idTipoRecordatorio,diaRecordatorio=diaRecordatorio,descripcion=descripcion,horaRecordar=horaRecordar)
+        r.save()
+        return HttpResponse('1')
+
+
 @csrf_exempt
 def andromeda(request):
-    return render(request, 'andromeda.html')
+    # numero = andromedaUsers.objects.filter(idAndromedaUser=id).annotate(Count('idAndromedaUser'))
+    numero = 12
+    return render(request, 'andromeda.html',{'numOfUsers':numero})
 
 @csrf_exempt
 def bienvenida(request):
@@ -38,150 +54,44 @@ def bienvenida(request):
     else:
         return render(request,'index.html')
 
+@csrf_exempt
 def registro(request):
     if request.method == 'POST':
         idAndromeda = request.POST.get('idAndromeda',False)
         username = request.POST.get('username',False)
         if(andromedadevices.objects.filter(idAndromeda=idAndromeda).exists()):
-            if(User.objects.filter(username=username).exists()):
+            if(not (User.objects.filter(username=username).exists())):
                 first_name = request.POST.get('nombreCompleto',False)
                 email = request.POST.get('correo',False)
                 password = request.POST.get('password',False)
                 exito = User.objects.create_user(username=username, password=password,email=email,first_name=first_name)
+                usuario =  User.objects.values('id').filter(username=username)
+                r = andromedaUsers(idAndromedaUser_id=usuario[0]['id'],idAndromeda_id=idAndromeda)
+                r.save()
                 return HttpResponse('1')
             else:
                 return HttpResponse('2')
         else:
             return HttpResponse('0');
 
-
+@csrf_exempt
 def login_user(request):
     username = request.POST.get('username', None)
     password = request.POST.get('password',None)
     acceso = authenticate(username=username,password=password)
-    if acceso is not None:
-        usuario = User.objects.filter(username=username)
-        request.session['username'] = username
+    if acceso is not None and acceso.is_active:
+        crearSession(request,username)
         login(request,acceso)
         respuesta = '1'
     else:
         respuesta = '0'
     return HttpResponse(respuesta);
 
-# def login_view(request):
-#     username = request.POST.get('username',False)
-#     password = request.POST.get('password',False)
-#     user = authenticate(username=username, password=password)
-#     print(username,password)
-#     if user is not None and user.is_active:
-#         login(request, user)
-#         # return HttpResponseRedirect("/n1.html")# Redirect to a success page.
-#         print(1)
-#     else:
-#         # return HttpResponseRedirect("/account/invalid/")# Return a 'disabled account' error message
-#         print(0)
-#     return render(request,'enter.html')
 
-# def index(request):
-#     form = LoginForm(request.POST or None)
-#     if method.request == 'POST':
-#         if form.is_valid():
-#             data = form.cleaned_data
-#             nombres_usuarios = data.get('name_user')
-#             contrasenia_usuarios = data.get('password_user')
-#             acceso = authenticate(username=nombres_usuarios,password=contrasenia_usuarios)
-#             if acceso is not None:
-#                 login(request,acceso)
-#             else:
-#                 return HttpResponseRedirect('/andromeda')
-#     else:
-#         form = LoginForm()
-#     return render(request,'login.html')
 
-#
-# def index(request):
-#     user = usuario.objects.filter(idUsuario = 1)
-#     mi_contexto = {'user':user}
-#     return render(request,'archive.html',mi_contexto)
-#
-# def formUsuario(request):
-#     if request.method == 'POST':
-#         form = UsuarioForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#         return redirect('andromeda:index')
-#     else:
-#         form = UsuarioForm()
-#
-#     return render(request,'registarUsuario.html',{'form':form})
-#
-# def usuarioEditar(request,idUser):
-#     user = usuario.objects.get(idUsuario=idUser)
-#     if request.method == 'GET':
-#         form = UsuarioForm(instance=usuario)
-#     else:
-#         form =  UsuarioForm(request.POST,instance=usuario)
-#         if form.is_valid():
-#             form.save()
-#         return redirect('adromeda:usuario')
-#     return render(request,'registarUsuario.html',{'form':form})
-#
-#
-# def usuarioDelete(request,idUser):
-#     user = user.objects.get(idUsuario=idUser)
-#     if request.method == 'POST':
-#         user.delete()
-#         return redirect('andromeda:index')
-#     return render(request,'usuarioDelete.html',{'user':user})
-#
-#
-# def validate_username(request):
-#     username = request.POST.get('username', None)
-#     password = request.POST.get('pass',None)
-#
-#     acceso = authenticate(username=username,password=password)
-#     if acceso is not None:
-#         login(request,acceso)
-#         return HttpResponse('1');
-#     else:
-#         return HttpResponse('0');
-    # data = {
-    #     'is_taken': User.objects.filter(username__iexact=username).exists()
-    # }
-    # if data['is_taken']:
-
-    #     data['error_message'] = 'A user with this username already exists.'
-    # lista = seralizers.seralize('Json','querySet')
-    # user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
-    # return JsonResponse({'username': username,'pass':password})
-
-#
-# class UsuarioList(ListView):
-#     model = usuario
-#     template_name = 'usuarioList.html'
-#
-# class UsuarioCrear(CreateView):
-#     model = usuario
-#     form_class = UsuarioForm
-#     template_name = 'registarUsuario.html'
-#     success_url = reverse_lazy('andromeda:index')
-#
-# class TestAjax(TemplateView):
-#     template_name = 'ajax.html';
-#
-# class UsuarioUpdate(UpdateView):
-#     model = usuario
-#     form_class = UsuarioForm
-#     template_name = 'registarUsuario.html'
-#     success_url = reverse_lazy('andromeda:index')
-#
-# class UsuarioDelete(DeleteView):
-#     model = usuario
-#     # template_name = 'registarUsuario.html'
-#     success_url = reverse_lazy('andromeda:index')
-#
-# class RegistroUsuario(CreateView):
-#     model = User
-#     template_name = 'registrar.html'
-#     form_class = RegistroForm
-#     # success_url = reverse_lazy('andromeda:index')
+def crearSession(request,username):
+    usuario =  User.objects.values('id','username','email').filter(username=username)
+    userAndromeda =  andromedaUsers.objects.values('idAndromeda','imagen').filter(idAndromedaUser=usuario[0]['id'])
+    request.session['user'] = usuario[0]
+    request.session['userAndromeda'] = userAndromeda[0]
+    request.session['idAndromeda'] = userAndromeda[0]['idAndromeda']

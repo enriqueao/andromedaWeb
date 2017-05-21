@@ -6,11 +6,12 @@
     <meta name="theme-color" content="#48494b" />
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <title>Andromeda bienvenido</title>
-    <script defer src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script defer src="{% static 'js/DjangoAjax.js' %}"></script>
     <script defer src="{% static 'js/slider.js' %}"></script>
     <script defer src="{% static 'js/config.js' %}"></script>
     <script defer src="{% static 'js/classie.js' %}"></script>
+    <script src="{% static 'js/hammer.min.js' %}"></script>
 
     <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
     <link rel="stylesheet" href="{% static 'css/demo.css' %}">
@@ -105,6 +106,15 @@
   </body>
   <script type="text/javascript">
 
+  var myElement = document.body;
+  var mc = new Hammer(myElement);
+  mc.on("panleft", function(ev) {
+    atras();
+  });
+  mc.on("panright", function(ev) {
+    next();
+  });
+
   function entrar(){
     var username = document.getElementById('input-5').value;
     var pass = document.getElementById('input-6').value;
@@ -135,7 +145,7 @@
     var confimPass = document.getElementById('input-7').value;
 
     $.ajax({
-      url:'andromeda/registro/',
+      url:'/andromeda/registro/',
       type:'POST',
       data:{'idAndromeda':idAndromeda,'username':username,'nombreCompleto':nombreCompleto,'correo':correo,'password':pass},
       success: function(response) {
@@ -151,18 +161,5 @@
     });
   }
 
-  function enviar() {
-    var username = document.getElementById('username');
-    var pass = document.getElementById('pass');
-
-    $.ajax({
-      url: config.url+"andromeda/ajax2/",
-      type: "POST",
-      data: {'username': username.value,'pass':pass.value},
-      success: function (response) {
-         console.log(response);
-      }
-    });
-  }
   </script>
 </html>
