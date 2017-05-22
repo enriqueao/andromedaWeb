@@ -1,4 +1,8 @@
 # -*- coding:utf-8 -*_
+import json
+from django.core.serializers.json import DjangoJSONEncoder
+from django.core import serializers
+from django.db.models import Count
 from django.shortcuts import render,redirect
 from django.template import loader,Context
 from django.http import HttpResponse,JsonResponse
@@ -16,36 +20,66 @@ from andromeda.forms import *
 
 @login_required
 def usuario(request):
+
     return render(request,'principal.html')
 
 @csrf_exempt
 def ayuda(request):
     return render(request, 'help.html')
+
 @csrf_exempt
 def perfil(request):
     return render(request, 'perfil.html')
+
 @csrf_exempt
 def recordatorio(request):
     return render(request, 'recordatorio.html')
 
+@csrf_exempt
+def graficar(request):
+    idAndromedaUser = request.POST.get('idAndromeda',False)
+    pendientes = len(list(recordatorios.objects.filter(idAndromedaUser=idAndromedaUser,idEstadoRecordatorio=1).values('idEstadoRecordatorio')))
+    eliminados = len(list(recordatorios.objects.filter(idAndromedaUser=idAndromedaUser,idEstadoRecordatorio=2).values('idEstadoRecordatorio')))
+    completados = len(list(recordatorios.objects.filter(idAndromedaUser=idAndromedaUser,idEstadoRecordatorio=3).values('idEstadoRecordatorio')))
+    data = {}
+    data['pendientes'] = pendientes
+    data['eliminados'] = eliminados
+    data['completados'] = completados
+    return HttpResponse(json.dumps(data), content_type = "application/json")
+
+@csrf_exempt
+def recordatoriosPendientes(request):
+    if request.method == 'POST':
+        idAndromedaUser = request.POST.get('idAndromeda',False)
+        recordatorio =  serializers.serialize('json',recordatorios.objects.filter(idAndromedaUser=1,idEstadoRecordatorio=1))
+        return HttpResponse(recordatorio, content_type='application/json')
+@csrf_exempt
 def guardarRecordatorio(request):
     idTipoRecordatorio = request.POST.get('idTipoRecordatorio',False)
     iduser = request.POST.get('id')
     diaRecordatorio = request.POST.get('diaRecordatorio',False)
     descripcion = request.POST.get('descripcion',False)
     horaRecordar = request.POST.get('horaRecordar',False)
-    # usuario =  User.objects.values('id').filter(username=username)
     if request.method == 'POST':
         r = recordatorios(idAndromedaUser=iduser,idTipoRecordatorio=idTipoRecordatorio,diaRecordatorio=diaRecordatorio,descripcion=descripcion,horaRecordar=horaRecordar)
         r.save()
         return HttpResponse('1')
 
+def eliminarRecordatorio(request):
+    primary = request.POST.get('primary')
+    if request.method == 'POST':
+        recordatorios.objects.filter(pk=primary).update(idEstadoRecordatorio='2')
+        return HttpResponse('1')
+
+def completarRecordatorio(request):
+    primary = request.POST.get('primary')
+    if request.method == 'POST':
+        recordatorios.objects.filter(pk=primary).update(idEstadoRecordatorio='3')
+        return HttpResponse('1')
 
 @csrf_exempt
 def andromeda(request):
-    # numero = andromedaUsers.objects.filter(idAndromedaUser=id).annotate(Count('idAndromedaUser'))
-    numero = 12
-    return render(request, 'andromeda.html',{'numOfUsers':numero})
+    return render(request, 'andromeda.html')
 
 @csrf_exempt
 def bienvenida(request):

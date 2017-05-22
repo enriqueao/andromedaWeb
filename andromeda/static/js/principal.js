@@ -23,8 +23,24 @@ function vistas(vista) {
   });
 }
 
+var pendientes = 0;
+var completados = 0;
+var eliminados = 0;
+
+
 function graficar(){
-  setTimeout("grafica()",700);
+  id = document.getElementById('id');
+  $.ajax({
+    url: "/andromeda/graficar/",
+    type: "POST",
+    data:{'idAndromeda':id.value},
+    success: function (response) {
+      pendientes = response['pendientes'];
+      completados = response['completados'];
+      eliminados = response['eliminados'];
+      setTimeout("grafica()",700);
+    }
+  });
 }
 
 function grafica(){
@@ -57,7 +73,7 @@ function grafica(){
     series: [{
         name: 'Recordatorios',
         colorByPoint: true,
-        data: [{name: 'Completadas',y: 56},{name: 'Eliminados',y: 51},{name: 'Pendientes',y: 4}]
+        data: [{name:'Completadas',y:completados},{name:'Eliminados',y:eliminados},{name:'Pendientes',y:pendientes}],
     }],
     exporting: { enabled: false },
     credits: {enabled: false},

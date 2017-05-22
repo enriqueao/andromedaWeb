@@ -13,7 +13,7 @@ class andromedaUsers(models.Model):
     idAndromeda = models.ForeignKey(andromedadevices,null=False,blank=False,on_delete=models.CASCADE)
     date_joined = models.DateTimeField(auto_now_add=True, editable=False, null=False, blank=False)
     estatus = models.IntegerField(default="1")
-    imagen = models.CharField(max_length=50,default="user.svg");
+    imagen = models.CharField(max_length=50,default="users.svg");
 
 class tiporecordatorio(models.Model):
     idTipoRecordatorio = models.AutoField(primary_key=True)
