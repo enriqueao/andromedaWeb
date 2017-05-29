@@ -2,7 +2,7 @@
 	position: relative;
 	z-index: 1;
 	display: inline-block;
-	margin: .5em;
+	margin: .3em;
 	max-width: 350px;
 	width: calc(100% - 2em);
 	vertical-align: top;
@@ -584,7 +584,7 @@
 .input__field--kyo {
 	padding: 0.85em 1.5em;
 	width: 100%;
-	border-radius: 2em;
+	border-radius: 1em;
 	background: #fff;
 	color: #535d92;
 }

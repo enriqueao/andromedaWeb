@@ -50,9 +50,10 @@ def graficar(request):
 @csrf_exempt
 def recordatoriosPendientes(request):
     if request.method == 'POST':
-        idAndromedaUser = request.POST.get('idAndromeda',False)
-        recordatorio =  serializers.serialize('json',recordatorios.objects.filter(idAndromedaUser=1,idEstadoRecordatorio=1))
+        idAndromedaUser = request.POST.get('id',False)
+        recordatorio =  serializers.serialize('json',recordatorios.objects.filter(idAndromedaUser=idAndromedaUser,idEstadoRecordatorio=1))
         return HttpResponse(recordatorio, content_type='application/json')
+
 @csrf_exempt
 def guardarRecordatorio(request):
     idTipoRecordatorio = request.POST.get('idTipoRecordatorio',False)
@@ -65,12 +66,14 @@ def guardarRecordatorio(request):
         r.save()
         return HttpResponse('1')
 
+@csrf_exempt
 def eliminarRecordatorio(request):
     primary = request.POST.get('primary')
     if request.method == 'POST':
         recordatorios.objects.filter(pk=primary).update(idEstadoRecordatorio='2')
         return HttpResponse('1')
 
+@csrf_exempt
 def completarRecordatorio(request):
     primary = request.POST.get('primary')
     if request.method == 'POST':
@@ -121,8 +124,7 @@ def login_user(request):
         respuesta = '0'
     return HttpResponse(respuesta);
 
-
-
+@csrf_exempt
 def crearSession(request,username):
     usuario =  User.objects.values('id','username','email').filter(username=username)
     userAndromeda =  andromedaUsers.objects.values('idAndromeda','imagen').filter(idAndromedaUser=usuario[0]['id'])

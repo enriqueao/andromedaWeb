@@ -12,16 +12,16 @@
   <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
   <link rel="stylesheet" href="{% static 'css/animate.css' %}">
 
-  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+  <script src="{% static 'js/jquery-3.1.0.min.js' %}"></script>
   <script defer src="{% static 'js/DjangoAjax.js' %}"></script>
   <script src="{% static 'js/hammer.min.js' %}"></script>
-  <script src="{% static 'js/principal.js' %}"></script>
+  <script defer src="{% static 'js/principal.js' %}"></script>
+  <script src="{% static 'js/moment.js' %}"></script>
   <script src="{% static 'js/config.js' %}"></script>
-  <script defer src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script defer src="https://code.highcharts.com/highcharts.js"></script>
   <script defer src="https://code.highcharts.com/modules/exporting.js"></script>
 
-  <title>Usuario</title>
+  <title>Andromeda Mobile</title>
 </head>
 <body onload="vistas('recordatorio'),recor()">
   <div class="index-general">
@@ -51,7 +51,6 @@
       </div>
     </div>
   </div>
-
   <div id="nuevo" class="nuevo-recordatorio-form" style="display:none;">
     <div class="salir">
       <div class="down">
@@ -60,9 +59,9 @@
     </div>
     <div class="formUsuario-recordatorio">
       <p>Fecha Del Recordatorio</p>
-      <input type="date" name="diaRecordatorio" value="" id="diaRecordatorio">
+      <input type="date" name="diaRecordatorio" value="" id="diaRecordatorio" >
       <p>Hora Del Recordatorio</p>
-      <input type="time" name="hora" value="" id="horaRecordar">
+      <input type="time" name="hora" value="" id="horaRecordar" value="now">
       <p>Prioridad</p>
       <div class="select">
         <select class="" name="" id="prioridad">
@@ -73,110 +72,9 @@
       </div>
       <textarea name="name" rows="8" id="descripcion"></textarea>
       <p>Para Continuar Solo Guarda el Recordatorio, Andromeda Home te lo recordara</p>
-      <input type="hidden" name="" value="{{request.session.userAndromeda.idAndromeda}}" id="id">
+      <input type="hidden" name="" value="{{request.session.user.id}}" id="id">
       <input type="submit" name="" value="Guardar" id="comenzar" onclick="guardarRecordatorio()">
     </div>
   </div>
-  <script type="text/javascript">
-  var myElement = document.body;
-  var mc = new Hammer(myElement);
-  mc.on("panleft", function(ev) {
-    abrirMenu();
-  });
-  mc.on("panright", function(ev) {
-    abrirMenu();
-  });
-
-  function guardarRecordatorio() {
-    prioridad = document.getElementById('prioridad');
-    id = document.getElementById('id');
-    diaRecordatorio = document.getElementById('diaRecordatorio');
-    descripcion = document.getElementById('descripcion');
-    horaRecordar = document.getElementById('horaRecordar');
-    $.ajax({
-      url: "/andromeda/guardarRecordatorio/",
-      type: "POST",
-      data:{'idTipoRecordatorio':prioridad.value,'diaRecordatorio':diaRecordatorio.value,'descripcion':descripcion.value,'horaRecordar':horaRecordar.value,'id':id.value},
-      success: function (response) {
-         if(response == '1'){
-            alert('Andromeda te recordara "recordatorio" en horas')
-            recor();
-            down();
-         } else {
-           alert(response);
-         }
-      }
-    });
-  }
-
-  function recor(){
-    setTimeout("recordatorios()",500);
-  }
-
-  function recordatorios() {
-    var id = document.getElementById('id');
-    var recordatoriosinner = document.getElementById('recordatorios');
-    var numPendientes = document.getElementById('numPendientes');
-    var recordatoriosPendientes = '';
-    var importancia = '';
-    $.ajax({
-      url: "/andromeda/recordatoriosPendientes/",
-      type: "POST",
-      data:{'id':id.value},
-      success: function (response) {
-        var recordatorios = response
-        console.log(response)
-        numPendientes.innerHTML = recordatorios.length+' Recordatorios Pendientes';
-        for (var i = 0; i < recordatorios.length; i++) {
-          formato = recordatorios[i]['fields'];
-          if(formato.idTipoRecordatorio == 1){importancia = 'alta'}if(formato.idTipoRecordatorio == 2){importancia = 'moderada'}else{importancia = 'baja'}
-          recordatoriosPendientes += '<div id='+recordatorios[i].pk+' class="recordatorio importancia-'+importancia+' animated pulse"> <div class="recordatorio-hora"> <p>'+formato.horaRecordar+'</p> </div> <div class="recordatorio-info"> <p>'+formato.descripcion+'</p> </div> <div class="recordatorio-action delete"><a onclick="eliminar('+recordatorios[i].pk+')"><img src="/static/images/rubbish-bin.svg" alt=""></a></div><div class="recordatorio-action complete"><a onclick="completar('+recordatorios[i].pk+')"><img src="/static/images/tick-inside-circle.svg" alt=""></a></div> </div>';
-        }
-        recordatoriosinner.innerHTML = recordatoriosPendientes;
-      }
-    });
-  }
-
-
-  function completar(id) {
-    var elemento = document.getElementById(id);
-    if(confirm("Deseas Completar este recordatorio?")){
-      $.ajax({
-        url: "/andromeda/completarRecordatorio/",
-        type: "POST",
-        data:{'primary':id},
-        success: function (response) {
-            if(response == '1'){
-              elemento.classList.remove("pulse");
-              elemento.classList.add("zoomOutUp");
-            } else {
-              elemento.classList.remove("pulse");
-              elemento.classList.add("shake");
-            }
-          }
-        });
-      }
-  }
-
-  function eliminar(id) {
-    var elemento = document.getElementById(id);
-    if(confirm("quieres eliminarlo?")){
-      $.ajax({
-        url: "/andromeda/eliminarRecordatorio/",
-        type: "POST",
-        data:{'primary':id},
-        success: function (response) {
-          if(response == '1'){
-            elemento.classList.remove("pulse");
-            elemento.classList.add("zoomOutUp");
-          } else {
-            elemento.classList.remove("pulse");
-            elemento.classList.add("shake");
-          }
-        }
-      });
-    }
-  }
-  </script>
 </body>
 </html>
